@@ -6,7 +6,8 @@ import subprocess
 
 DIT_DURATION = 0.1
 DAH_DURATION = DIT_DURATION * 3
-SPACE_DURATION = DIT_DURATION * 3
+SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
+LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
 WORD_SPACE_DURATION = DIT_DURATION * 7
 
 #  DAH_DURATION = 0.3
@@ -18,17 +19,19 @@ FREQUENCY_PAUSE = 0
 PLAY_COMMAND = "play -n synth {duration} sin {frequency}"
 
 SIGNAL_TABLE = {
-        '': 0,
-        '.': 1,
-        '-': 2,
-        ' ': 3,
+        '.': 0,
+        '-': 1,
+        '#': 2,  # inside letter
+        '=': 3,  # between letters
+        ' ': 4,  # between words
         }
 
 SIGNAL_ARGS = {
-    0: {"duration": SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
-    1: {"duration": DIT_DURATION, "frequency": FREQUENCY_SOUND},
-    2: {"duration": DAH_DURATION, "frequency": FREQUENCY_SOUND},
-    3: {"duration": WORD_SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
+    0: {"duration": DIT_DURATION, "frequency": FREQUENCY_SOUND},
+    1: {"duration": DAH_DURATION, "frequency": FREQUENCY_SOUND},
+    2: {"duration": SIGNAL_SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
+    3: {"duration": LETTER_SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
+    4: {"duration": WORD_SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
         }
 
 MORSE_TABLE = {
@@ -81,17 +84,23 @@ def play_signal(signal: int):
 
     command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
 
-    subprocess.run(command)
-    #  print(command)
+    print(' '.join(command))
 
-w = 'abba'
+    # https://docs.python.org/3/library/subprocess.html#subprocess.run
+    subprocess.run(command, capture_output=True)
 
+w = 'abba baba'
+
+list_of_words = w.split(' ')
+
+encoded_words = ['='.join(word) for word in list_of_words]
+
+print(w, list_of_words, encoded_words)
 code = ''.join([MORSE_TABLE[letter] for letter in w])
 
 print(code)
 
-for signal in code:
-    play_signal(signal=SIGNAL_TABLE[signal])
+#  for signal in code:
+#      print(signal)
+#      play_signal(signal=SIGNAL_TABLE[signal])
 
-    if signal != ' ':
-        play_signal(signal=SIGNAL_TABLE[''])
