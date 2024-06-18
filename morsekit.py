@@ -76,10 +76,11 @@ MORSE_TABLE = {
 def play_signal(signal: int):
     """plays the signal
 
-    0: letter pause
-    1: short
-    2: long
-    2: word pause
+    0: short
+    1: long
+    2: signal pause
+    3: letter pause
+    4: word pause
     """
 
     command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
@@ -101,11 +102,14 @@ encoded_words = ['='.join(encode_word(word)) for word in list_of_words]
 
 encoded = ' '.join(encoded_words)
 
-print(w, list_of_words, encoded_words, encoded)
+print(w, list_of_words, encoded_words, encoded, sep='\n')
 #  code = ''.join([MORSE_TABLE[letter] for letter in w])
 
 #  print(code)
 
+for signal in encoded:
+    print(signal)
+    play_signal(signal=SIGNAL_TABLE[signal])
 #  for signal in code:
 #      print(signal)
 #      play_signal(signal=SIGNAL_TABLE[signal])
