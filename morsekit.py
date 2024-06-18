@@ -3,9 +3,13 @@
 # https://en.wikipedia.org/wiki/Morse_code
 
 DIT_DURATION = 0.1
-DAH_DURATION = 0.3
-SPACE_DURATION = 0.3
-WORD_SPACE_DURATION = 0.7
+DAH_DURATION = DIT_DURATION * 3
+SPACE_DURATION = DIT_DURATION * 3
+WORD_SPACE_DURATION = DIT_DURATION * 7
+
+#  DAH_DURATION = 0.3
+#  SPACE_DURATION = DIT_DURATION * 3
+#  WORD_SPACE_DURATION = 0.7
 
 FREQUENCY_SOUND = 1760
 FREQUENCY_PAUSE = 0
@@ -16,6 +20,13 @@ SIGNAL_TABLE = {
         '.': 1,
         '-': 2,
         ' ': 3,
+        }
+
+SIGNAL_ARGS = {
+    0: {"duration": SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
+    1: {"duration": DIT_DURATION, "frequency": FREQUENCY_SOUND},
+    2: {"duration": DAH_DURATION, "frequency": FREQUENCY_SOUND},
+    3: {"duration": WORD_SPACE_DURATION, "frequency": FREQUENCY_PAUSE},
         }
 
 MORSE_TABLE = {
