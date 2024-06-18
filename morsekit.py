@@ -88,9 +88,12 @@ def play_signal(signal: int):
 
 def encode_word(word: str):
     #  encoded_word = '#'.join([MORSE_TABLE[letter.lower()] for letter in word])
-    morse_word = ''.join([MORSE_TABLE[letter.lower()] for letter in word])
-    encoded_word = '#'.join(morse_word)
+    #  morse_word = ''.join([MORSE_TABLE[letter.lower()] for letter in word])
+    morse_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
+    #  encoded_word = '#'.join(morse_word)
+    print(morse_word)
     #  print(encoded_word)
+    encoded_word = morse_word
 
     return encoded_word
 
@@ -98,17 +101,10 @@ w = 'abba baba'
 
 list_of_words = w.split(' ')
 
-#  encoded_words = '='.join([encode_word(word) for word in list_of_words])
-#  encoded_words = '='.join([encode_word(word) for word in list_of_words])
 encoded_words = [encode_word(word) for word in list_of_words]
 
 encoded = ' '.join(encoded_words)
 
-#  print(encoded_words)
-#  print(w, list_of_words, encoded_words, encoded, sep='\n')
-#  code = ''.join([MORSE_TABLE[letter] for letter in w])
-
-#  print(code)
 print(encoded)
 
 for signal in encoded:
