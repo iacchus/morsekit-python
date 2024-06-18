@@ -4,7 +4,7 @@ import subprocess
 
 # https://en.wikipedia.org/wiki/Morse_code
 
-DIT_DURATION = 0.1
+DIT_DURATION = 0.2
 DAH_DURATION = DIT_DURATION * 3
 SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
 LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
