@@ -8,7 +8,7 @@ DIT_DURATION = 0.1
 DAH_DURATION = DIT_DURATION * 3
 SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
 LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
-WORD_SPACE_DURATION = DIT_DURATION * 7
+WORD_SPACE_DURATION = DIT_DURATION * 7  # space between words
 
 FREQUENCY_SOUND = 1760  # A6
 FREQUENCY_PAUSE = 0  # silence
@@ -32,41 +32,41 @@ SIGNAL_ARGS = {
 
 MORSE_TABLE = {
         'a': '.-',
-        'b': '.---',
-        'c': '',
-        'd': '',
-        'e': '',
-        'f': '',
-        'g': '',
-        'h': '',
-        'i': '',
-        'j': '',
-        'k': '',
-        'l': '',
-        'm': '',
-        'n': '',
-        'o': '',
-        'p': '',
-        'q': '',
-        'r': '',
-        's': '',
-        't': '',
-        'u': '',
-        'v': '',
-        'w': '',
-        'x': '',
-        'y': '',
-        'z': '',
-        '1': '',
-        '2': '',
-        '3': '',
-        '4': '',
-        '5': '',
-        '6': '',
-        '7': '',
-        '8': '',
-        '9': '',
-        '0': '',
+        'b': '-...',
+        'c': '-.-.',
+        'd': '-..',
+        'e': '.',
+        'f': '..-.',
+        'g': '--.',
+        'h': '....',
+        'i': '..',
+        'j': '.---',
+        'k': '-.-',
+        'l': '.-..',
+        'm': '--',
+        'n': '.-',
+        'o': '---',
+        'p': '.--.',
+        'q': '--.-',
+        'r': '.-.',
+        's': '...',
+        't': '-',
+        'u': '..-',
+        'v': '...-',
+        'w': '.--',
+        'x': '-..-',
+        'y': '-.--',
+        'z': '--..',
+        '1': '.----',
+        '2': '..---',
+        '3': '...--',
+        '4': '....-',
+        '5': '.....',
+        '6': '-....',
+        '7': '--...',
+        '8': '---..',
+        '9': '----.',
+        '0': '-----',
         }
 
 def play_signal(signal: int):
@@ -87,13 +87,7 @@ def play_signal(signal: int):
     subprocess.run(command, capture_output=True)
 
 def encode_word(word: str):
-    #  encoded_word = '#'.join([MORSE_TABLE[letter.lower()] for letter in word])
-    #  morse_word = ''.join([MORSE_TABLE[letter.lower()] for letter in word])
-    morse_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
-    #  encoded_word = '#'.join(morse_word)
-    print(morse_word)
-    #  print(encoded_word)
-    encoded_word = morse_word
+    encoded_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
 
     return encoded_word
 
