@@ -21,8 +21,8 @@ PLAY_COMMAND = "play -n synth {duration} sin {frequency}"
 SIGNAL_TABLE = {
         '.': 0,
         '-': 1,
-        '#': 2,  # inside letter
-        '=': 3,  # between letters
+        '#': 2,  # between signals (inside letter, ie., same letter)
+        '=': 3,  # between letters (ie., same word)
         ' ': 4,  # between words
         }
 
@@ -89,11 +89,15 @@ def play_signal(signal: int):
     # https://docs.python.org/3/library/subprocess.html#subprocess.run
     subprocess.run(command, capture_output=True)
 
+def encode_word(word: str):
+    encoded_word = '#'.join([MORSE_TABLE[letter.lower()] for letter in word])
+    return encoded_word
+
 w = 'abba baba'
 
 list_of_words = w.split(' ')
 
-encoded_words = ['='.join(word) for word in list_of_words]
+encoded_words = ['='.join(encode_word(word)) for word in list_of_words]
 
 print(w, list_of_words, encoded_words)
 code = ''.join([MORSE_TABLE[letter] for letter in w])
