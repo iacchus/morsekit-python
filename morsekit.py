@@ -11,6 +11,13 @@ FREQUENCY_SOUND = 1760
 FREQUENCY_PAUSE = 0
 PLAY_COMMAND = "play -n synth {duration} sin {frequency}"
 
+SIGNAL_TABLE = {
+        '': 0,
+        '.': 1,
+        '-': 2,
+        ' ': 3,
+        }
+
 MORSE_TABLE = {
         'a': '.-',
         'b': '.---',
@@ -53,8 +60,15 @@ MORSE_TABLE = {
 def play_signal(signal: int):
     """plays the signal
 
-    0: pause
+    0: letter pause
     1: short
     2: long
+    2: word pause
     """
     pass
+
+w = 'abba'
+
+code = " ".join([MORSE_TABLE[letter] for letter in w])
+
+print(code)
