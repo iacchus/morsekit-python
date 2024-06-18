@@ -99,10 +99,12 @@ list_of_words = w.split(' ')
 
 encoded_words = ['='.join(encode_word(word)) for word in list_of_words]
 
-print(w, list_of_words, encoded_words)
-code = ''.join([MORSE_TABLE[letter] for letter in w])
+encoded = ' '.join(encoded_words)
 
-print(code)
+print(w, list_of_words, encoded_words, encoded)
+#  code = ''.join([MORSE_TABLE[letter] for letter in w])
+
+#  print(code)
 
 #  for signal in code:
 #      print(signal)
