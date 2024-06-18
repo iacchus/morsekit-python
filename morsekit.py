@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import subprocess
+
 # https://en.wikipedia.org/wiki/Morse_code
 
 DIT_DURATION = 0.1
@@ -76,10 +78,20 @@ def play_signal(signal: int):
     2: long
     2: word pause
     """
-    pass
+
+    command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
+
+    subprocess.run(command)
+    #  print(command)
 
 w = 'abba'
 
-code = " ".join([MORSE_TABLE[letter] for letter in w])
+code = ''.join([MORSE_TABLE[letter] for letter in w])
 
 print(code)
+
+for signal in code:
+    play_signal(signal=SIGNAL_TABLE[signal])
+
+    if signal != ' ':
+        play_signal(signal=SIGNAL_TABLE[''])
