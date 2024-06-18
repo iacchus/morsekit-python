@@ -10,12 +10,8 @@ SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
 LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
 WORD_SPACE_DURATION = DIT_DURATION * 7
 
-#  DAH_DURATION = 0.3
-#  SPACE_DURATION = DIT_DURATION * 3
-#  WORD_SPACE_DURATION = 0.7
-
-FREQUENCY_SOUND = 1760
-FREQUENCY_PAUSE = 0
+FREQUENCY_SOUND = 1760  # A6
+FREQUENCY_PAUSE = 0  # silence
 PLAY_COMMAND = "play -n synth {duration} sin {frequency}"
 
 SIGNAL_TABLE = {
@@ -85,32 +81,34 @@ def play_signal(signal: int):
 
     command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
 
-    print(' '.join(command))
+    #  print(' '.join(command))
 
     # https://docs.python.org/3/library/subprocess.html#subprocess.run
     subprocess.run(command, capture_output=True)
 
 def encode_word(word: str):
-    encoded_word = '#'.join([MORSE_TABLE[letter.lower()] for letter in word])
+    #  encoded_word = '#'.join([MORSE_TABLE[letter.lower()] for letter in word])
+    encoded_word = '#'.join(MORSE_TABLE[letter.lower()] for letter in word)
+
     return encoded_word
 
 w = 'abba baba'
 
 list_of_words = w.split(' ')
 
-encoded_words = ['='.join(encode_word(word)) for word in list_of_words]
+#  encoded_words = '='.join([encode_word(word) for word in list_of_words])
+#  encoded_words = '='.join([encode_word(word) for word in list_of_words])
+encoded_words = [encode_word(word) for word in list_of_words]
 
 encoded = ' '.join(encoded_words)
 
-print(w, list_of_words, encoded_words, encoded, sep='\n')
+print(encoded_words)
+#  print(w, list_of_words, encoded_words, encoded, sep='\n')
 #  code = ''.join([MORSE_TABLE[letter] for letter in w])
 
 #  print(code)
 
-for signal in encoded:
-    print(signal)
-    play_signal(signal=SIGNAL_TABLE[signal])
-#  for signal in code:
+#  for signal in encoded:
 #      print(signal)
 #      play_signal(signal=SIGNAL_TABLE[signal])
 
