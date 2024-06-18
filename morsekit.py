@@ -69,6 +69,8 @@ MORSE_TABLE = {
         '0': '-----',
         }
 
+MORSE_REVERSE_TABLE = {code: letter for letter, code in MORSE_TABLE.items()}
+
 def play_signal(signal: int):
     """plays the signal
 
@@ -91,17 +93,17 @@ def encode_word(word: str):
 
     return encoded_word
 
-w = 'abba baba'
+if __name__ == "__main__":
+    w = 'abba baba'
 
-list_of_words = w.split(' ')
+    list_of_words = w.split(' ')
 
-encoded_words = [encode_word(word) for word in list_of_words]
+    encoded_words = [encode_word(word) for word in list_of_words]
+    encoded = ' '.join(encoded_words)
 
-encoded = ' '.join(encoded_words)
+    #  print(encoded)
 
-print(encoded)
-
-for signal in encoded:
-    print(signal)
-    play_signal(signal=SIGNAL_TABLE[signal])
+    for signal in encoded:
+        print(signal)
+        play_signal(signal=SIGNAL_TABLE[signal])
 
