@@ -5,10 +5,10 @@ import subprocess
 # https://en.wikipedia.org/wiki/Morse_code
 
 DIT_DURATION = 0.1
-DAH_DURATION = DIT_DURATION * 3
+DAH_DURATION = round(DIT_DURATION * 3, 3)
 SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
-LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
-WORD_SPACE_DURATION = DIT_DURATION * 7  # space between words
+LETTER_SPACE_DURATION = round(DIT_DURATION * 3, 3) # duration of space between letters
+WORD_SPACE_DURATION = round(DIT_DURATION * 7, 3)  # space between words
 
 FREQUENCY_SOUND = 1760  # A6
 FREQUENCY_PAUSE = 0  # silence
@@ -73,69 +73,29 @@ MORSE_TABLE = {
 
 MORSE_REVERSE_TABLE = {code: letter for letter, code in MORSE_TABLE.items()}
 
-#  def play_signal(signal: int):
-#      """plays the signal
-#
-#      0: short
-#      1: long
-#      2: signal pause
-#      3: letter pause
-#      4: word pause
-#      """
-#
-#      command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
-#
-#      #  print(' '.join(command))
-#
-#      # https://docs.python.org/3/library/subprocess.html#subprocess.run
-#      subprocess.run(command, capture_output=True)
 
-def play(word: str):
-    """plays the signal
+def play(text: str):
 
-    0: short
-    1: long
-    2: signal pause
-    3: letter pause
-    4: word pause
-    """
+    encoded_text = '='.join(['#'.join(MORSE_TABLE[character.lower()]) for character in text])
 
-    encoded_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
+    print("encoded text is:", encoded_text)
 
     signal_args_list = list()
-    for signal in encoded_word:
+    for signal in encoded_text:
         signal_index = SIGNAL_TABLE[signal]
         signal_args_list.append(SIGNAL_ARGS_STR.format(**SIGNAL_ARGS[signal_index]))
 
-    signal_args = " : ".join(signal_args_list)  # https://stackoverflow.com/questions/46057100/how-to-sox-sequence-of-synth-commands
-    #  command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
+    # https://stackoverflow.com/questions/46057100/how-to-sox-sequence-of-synth-commands
+    signal_args = " : ".join(signal_args_list)
     command = f"{PLAY_COMMAND} {signal_args}".split(' ')
 
-    print(command)
-
-    #  print(' '.join(command))
+    print("command is:", ' '.join(command))
 
     # https://docs.python.org/3/library/subprocess.html#subprocess.run
     subprocess.run(command, capture_output=True)
 
 
-#  def encode_word(word: str):
-#      encoded_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
-#
-#      return encoded_word
-
 if __name__ == "__main__":
-    word = 'abba baba'
+    text = 'abba baba'
 
-    #  list_of_words = w.split(' ')
-
-    #  encoded_words = [encode_word(word) for word in list_of_words]
-    #  encoded = ' '.join(encoded_words)
-
-    #  encoded = encode_word(word)
-
-    play(word)
-    #  for signal in encoded:
-        #  print(signal)
-        #  play_signal(signal=SIGNAL_TABLE[signal])
-
+    play(text)
