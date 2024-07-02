@@ -68,6 +68,7 @@ MORSE_TABLE = {
         '8': '---..',
         '9': '----.',
         '0': '-----',
+        ' ': ' ',
         }
 
 MORSE_REVERSE_TABLE = {code: letter for letter, code in MORSE_TABLE.items()}
@@ -124,7 +125,7 @@ def play(word: str):
 #      return encoded_word
 
 if __name__ == "__main__":
-    word = 'abbababa'
+    word = 'abba baba'
 
     #  list_of_words = w.split(' ')
 
