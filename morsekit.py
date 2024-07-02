@@ -4,7 +4,7 @@ import subprocess
 
 # https://en.wikipedia.org/wiki/Morse_code
 
-DIT_DURATION = 0.2
+DIT_DURATION = 0.05
 DAH_DURATION = DIT_DURATION * 3
 SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
 LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
@@ -100,8 +100,6 @@ if __name__ == "__main__":
 
     encoded_words = [encode_word(word) for word in list_of_words]
     encoded = ' '.join(encoded_words)
-
-    #  print(encoded)
 
     for signal in encoded:
         print(signal)
