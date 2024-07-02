@@ -4,7 +4,7 @@ import subprocess
 
 # https://en.wikipedia.org/wiki/Morse_code
 
-DIT_DURATION = 0.05
+DIT_DURATION = 0.1
 DAH_DURATION = DIT_DURATION * 3
 SIGNAL_SPACE_DURATION = DIT_DURATION  # space between signals of one letter
 LETTER_SPACE_DURATION = DIT_DURATION * 3 # duration of space between letters
@@ -12,7 +12,8 @@ WORD_SPACE_DURATION = DIT_DURATION * 7  # space between words
 
 FREQUENCY_SOUND = 1760  # A6
 FREQUENCY_PAUSE = 0  # silence
-PLAY_COMMAND = "play -n synth {duration} sin {frequency}"
+PLAY_COMMAND = "play -n"
+SIGNAL_ARGS_STR = "synth {duration} sin {frequency}"
 
 SIGNAL_TABLE = {
         '.': 0,
@@ -71,7 +72,24 @@ MORSE_TABLE = {
 
 MORSE_REVERSE_TABLE = {code: letter for letter, code in MORSE_TABLE.items()}
 
-def play_signal(signal: int):
+#  def play_signal(signal: int):
+#      """plays the signal
+#
+#      0: short
+#      1: long
+#      2: signal pause
+#      3: letter pause
+#      4: word pause
+#      """
+#
+#      command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
+#
+#      #  print(' '.join(command))
+#
+#      # https://docs.python.org/3/library/subprocess.html#subprocess.run
+#      subprocess.run(command, capture_output=True)
+
+def play(word: str):
     """plays the signal
 
     0: short
@@ -81,27 +99,42 @@ def play_signal(signal: int):
     4: word pause
     """
 
-    command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
+    encoded_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
+
+    signal_args_list = list()
+    for signal in encoded_word:
+        signal_index = SIGNAL_TABLE[signal]
+        signal_args_list.append(SIGNAL_ARGS_STR.format(**SIGNAL_ARGS[signal_index]))
+
+    signal_args = " : ".join(signal_args_list)  # https://stackoverflow.com/questions/46057100/how-to-sox-sequence-of-synth-commands
+    #  command = PLAY_COMMAND.format(**SIGNAL_ARGS[signal]).split(' ')
+    command = f"{PLAY_COMMAND} {signal_args}".split(' ')
+
+    print(command)
 
     #  print(' '.join(command))
 
     # https://docs.python.org/3/library/subprocess.html#subprocess.run
     subprocess.run(command, capture_output=True)
 
-def encode_word(word: str):
-    encoded_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
 
-    return encoded_word
+#  def encode_word(word: str):
+#      encoded_word = '='.join(['#'.join(MORSE_TABLE[letter.lower()]) for letter in word])
+#
+#      return encoded_word
 
 if __name__ == "__main__":
-    w = 'abba baba'
+    word = 'abbababa'
 
-    list_of_words = w.split(' ')
+    #  list_of_words = w.split(' ')
 
-    encoded_words = [encode_word(word) for word in list_of_words]
-    encoded = ' '.join(encoded_words)
+    #  encoded_words = [encode_word(word) for word in list_of_words]
+    #  encoded = ' '.join(encoded_words)
 
-    for signal in encoded:
-        print(signal)
-        play_signal(signal=SIGNAL_TABLE[signal])
+    #  encoded = encode_word(word)
+
+    play(word)
+    #  for signal in encoded:
+        #  print(signal)
+        #  play_signal(signal=SIGNAL_TABLE[signal])
 
