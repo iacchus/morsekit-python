@@ -80,13 +80,9 @@ def play(text: str):
 
     print("encoded text is:", encoded_text)
 
-    signal_args_list = list()
-    for signal in encoded_text:
-        signal_index = SIGNAL_TABLE[signal]
-        signal_args_list.append(SIGNAL_ARGS_STR.format(**SIGNAL_ARGS[signal_index]))
-
     # https://stackoverflow.com/questions/46057100/how-to-sox-sequence-of-synth-commands
-    signal_args = " : ".join(signal_args_list)
+    signal_args = " : ".join([SIGNAL_ARGS_STR.format(**SIGNAL_ARGS[SIGNAL_TABLE[signal]]) for signal in encoded_text])
+
     command = f"{PLAY_COMMAND} {signal_args}".split(' ')
 
     print("command is:", ' '.join(command))
@@ -96,6 +92,7 @@ def play(text: str):
 
 
 if __name__ == "__main__":
-    text = 'abba baba'
+    #  text = 'abba baba'
+    text = 'Hello world'
 
     play(text)
